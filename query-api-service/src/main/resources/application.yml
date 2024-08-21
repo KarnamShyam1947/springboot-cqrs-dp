@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: query-api-service
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: sb-cqrs-demo-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring:
+          json:
+            trusted:
+              packages : com.shyam.dto
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: products_db
+
+application:
+  kafka:
+    topic-name: sb-cqrs-demo-topic

@@ -1,6 +1,7 @@
 package com.shyam.services;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
+
+    @Value("${application.kafka.topic-name}")
+    private String topicName;
     
     private final ProductRepository productRepository;
     private final KafkaTemplate<String, EventDTO> kafkaTemplate;
@@ -24,7 +28,7 @@ public class ProductService {
         ProductEntity product = productRepository.save(newProduct);
 
         EventDTO event=new EventDTO("CreateProduct", product);
-        kafkaTemplate.send("product-event-topic", event);
+        kafkaTemplate.send(topicName, event);
 
         return product;
     }
@@ -34,7 +38,7 @@ public class ProductService {
         productRepository.delete(product);
 
         EventDTO event=new EventDTO("DeleteProduct", product);
-        kafkaTemplate.send("product-event-topic", event);
+        kafkaTemplate.send(topicName, event);
     }
 
     public ProductEntity updateProduct(int id, ProductDTO dto) {
@@ -53,7 +57,7 @@ public class ProductService {
         ProductEntity updatedProduct = productRepository.save(product);
 
         EventDTO event=new EventDTO("UpdateProduct", updatedProduct);
-        kafkaTemplate.send("product-event-topic", event);
+        kafkaTemplate.send(topicName, event);
         return updatedProduct;
     }
 
