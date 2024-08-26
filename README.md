@@ -85,8 +85,8 @@ By implementing CQRS, you can achieve a more organized and maintainable architec
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/cqrs-spring-boot.git
-   cd cqrs-spring-boot
+   https://github.com/KarnamShyam1947/springboot-cqrs-dp.git
+   cd springboot-cqrs-dp
     ```
 
 2. **Ensure Services Are Running**
